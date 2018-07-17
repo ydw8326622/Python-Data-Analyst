@@ -1,0 +1,27 @@
+# You need to write a function analysis that parses and counts the learning data in the ~/Code/analysis.py Python file. 
+The analysis function takes two arguments. The first parameter is the learning data json file name, 
+the file content format is consistent with the user_study.json file format, and the second parameter is the user ID. 
+You need to parse the json file in the function, and count the number of learning times and the total number of minutes 
+of the user ID specified by the second parameter, that is, the function will return two values, the first one is the learning
+time of the specified user. The second is the total number of minutes of learning for the specified user.
+
+
+cd ~/Code
+wget http://labfile.oss.aliyuncs.com/courses/764/user_study.json
+user_study.json (part):
+{"minutes": 30, "created_at": "2016-05-01 00:00:10", "user_id": 199071, "lab": "\u7528\u6237\u53ca\u6587\u4ef6\u6743\u9650\u7ba1\u7406", "course": "Linux \u57fa\u7840\u5165\u95e8\uff08\u65b0\u7248\uff09"}
+
+# Need to parse the json file with the json package
+import json
+import os
+
+def analysis(file, user_id):
+    times = 0
+    minutes = 0
+    with open(file,'r') as data:
+        fjson = json.load(data)
+        for datas in fjson:
+            if datas['user_id']==user_id:
+                times += 1
+                minutes += datas['minutes']
+    return times,minutes
