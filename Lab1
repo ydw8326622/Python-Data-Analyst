@@ -25,3 +25,6 @@ def analysis(file, user_id):
                 times += 1
                 minutes += datas['minutes']
     return times,minutes
+    
+# print(analysis('user_study.json',199071))
+# (17, 558)
