@@ -1,0 +1,30 @@
+# Requirements:
+The function name must be an analysis;
+The code must be written to the ~/ Code / analysis.py file;
+The analysis function accepts two parameters, the first parameter is the json file name, and the second parameter is the user ID;
+The analysis function returns two values, the first value is the number of times the specified user is learning, and the second value is the number of minutes of the specified user;
+Return 0 if the file passed to the analysis function does not exist or the user ID does not exist;
+
+
+cd ~/Code
+wget http://labfile.oss.aliyuncs.com/courses/764/user_study.json
+user_study.json (part):
+{"minutes": 30, "created_at": "2016-05-01 00:00:10", "user_id": 199071, "lab": "\u7528\u6237\u53ca\u6587\u4ef6\u6743\u9650\u7ba1\u7406", "course": "Linux \u57fa\u7840\u5165\u95e8\uff08\u65b0\u7248\uff09"}
+
+# Need to parse the json file with the json package
+import json
+import pandas as pd
+
+def analysis(file, user_id):
+    times = 0
+    minutes = 0
+    df = pd.read_json(file)
+    sum_all = df[df['user_id']==user_id].sum()
+    minutes = sum_all['minutes']
+    count_all = df[df['user_id']==user_id].count()
+    times = count_all['user_id']
+    return times, minutes
+
+
+# print(analysis('user_study.json',199071))
+# (17, 558)
