@@ -22,3 +22,4 @@ ax.plot(x, x, 'g-', label=r'$y = x$')
 ax.legend()
 ax.axis([0, 1, 0, 1])
 
+fig.show()
