@@ -1,0 +1,81 @@
+# A non-linear classification task is accomplished by a support vector machine. The sample data here zoo.csv is from the UCI data website.
+# Zoo.csv is called the zoo dataset. There are 18 columns in total. The first column is the animal name and the last column is the animal classification.
+# The 16 columns in the data set are characteristic of the animal, such as whether there is hair, whether to lay eggs, and so on. Except for the number of legs, the remaining feature columns are all Boolean data. There are 7 categories of animals in the dataset, represented by the numbers in the last column.
+# Next, we try to accomplish this nonlinear multi-classification task with support vector machine. The first step is still to import the csv data file. Then define 16 columns as features and the last column as the target value.
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.decomposition import PCA
+
+
+# Import the data
+data = pd.read_csv('zoo.csv', header=0)
+
+# Defining feature variables and target variables
+feature = data.iloc[:, 1:17].values
+target = data['type'].values
+
+# The data set is segmented, 70% for the training set and 30% for the test set.
+x_train, x_test, y_train, y_test = train_test_split(feature, target, test_size=0.3, random_state=50)
+
+# Build the model
+model = SVC()
+
+# Train the model
+model.fit(x_train, y_train)
+
+# Predection
+results = model.predict(x_test)
+
+print(model.score(x_test, y_test))
+
+# result = 0.8666666666667
+
+
+# PCA` dimensionality reduction （Reduce the number of features to make it easier to visualize）
+
+from matplotlib import pyplot as plt
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.decomposition import PCA
+
+# import data
+data = pd.read_csv('zoo.csv', header=0)
+
+# define feature variables and target variables
+feature = data.iloc[:, 1:17].values
+target = data['type'].values
+
+# Use PCA to reduce dimensions to 2
+pca = PCA(n_components=2)
+feature_pca = pca.fit_transform(feature)
+
+
+# The data set is segmented, 70% for the training set and 30% for the test set.
+x_train, x_test, y_train, y_test = train_test_split(feature_pca, target, test_size=0.3, random_state=50)
+
+# build the model
+model = SVC()
+
+# train the model
+model.fit(x_train, y_train)
+
+# prediction
+results = model.predict(x_test)
+
+print(model.score(x_test, y_test))
+
+# Draw training data in default style
+plt.scatter(x_train[:, 0], x_train[:, 1], alpha=0.3)
+
+# Draw test data in squares
+plt.scatter(x_test[:, 0], x_test[:, 1], marker=',', c=y_test)
+
+# Label the forecast results in the top left of the test data with the label style
+for i, txt in enumerate(results):
+    plt.annotate(txt, (x_test[:, 0][i], x_test[:, 1][i]))
+
+plt.show()
