@@ -1,5 +1,11 @@
 # Use the perceptron method provided by Scikit-learn to test the classification of the data set.
 
+wget http://labfile.oss.aliyuncs.com/courses/764/data05.zip
+unzip data05.zip
+
+
+# test .py
+
 from matplotlib import pyplot as plt
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -35,3 +41,53 @@ for i, txt in enumerate(results):
     plt.annotate(txt, (x_test[:, 0][i], x_test[:, 1][i]))
 
 plt.show()
+
+
+# print(model.score(x_test, y_test))
+    0.990196078431
+    
+    
+
+# Re-classify two_class_data.csv, which has just used the perceptron to 99%, through the support vector machine
+
+# test2.py
+
+from matplotlib import pyplot as plt
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+
+# import data
+data = pd.read_csv("two_class_data.csv", header=0)
+
+# Defining feature variables and target variables
+feature = data[['x', 'y']].values
+target = data['class'].values
+
+# The data set is segmented, 70% for the training set and 30% for the test set.
+x_train, x_test, y_train, y_test = train_test_split(feature, target, test_size=0.3, random_state=50)
+
+# Building a model
+model = SVC()
+
+# Training model
+model.fit(x_train, y_train)
+
+# Prediction
+results = model.predict(x_test)
+
+# Draw training data in default style
+plt.scatter(x_train[:, 0], x_train[:, 1], alpha=0.3)
+
+# Draw test data in squares
+plt.scatter(x_test[:, 0], x_test[:, 1], marker=',', c=y_test)
+
+# Label the forecast results in the top left of the test data with the label style
+for i, txt in enumerate(results):
+    plt.annotate(txt, (x_test[:, 0][i], x_test[:, 1][i]))
+
+plt.show()
+
+
+# print(model.score(x_test, y_test))
+    1
