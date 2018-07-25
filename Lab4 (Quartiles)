@@ -1,0 +1,33 @@
+# Quartiles are the division of a set of data values into four equal parts, each part containing 1/4 of the data. The dividing point of this division is the quartile. The division points of the first part and the second part are called the first quantile, also called the 25th percentile (the upper quartile), and the division points of the third part and the fourth part are called the third. The quartile is also known as the 75th percentile (lower quartile). The division point of the second part and the third part is the second four-point score, which is the median. The interquartile range IQRIQR is the difference between the third quartile and the first quartile, which is IQR = Q_3 - Q_1 IQR=Q
+3−Q1
+# All data items less than Q1 - 1.5IQR or greater than Q3 + 1.5IQR are referred to as outliers.
+# In this challenge, you need to write a function find_outerlier in the ~/Code/outlier.py Python file that looks for the outliers defined above, and the find_outlier function accepts a list parameter that represents the data sequence. The function looks for all outliers in the list and returns all outliers as a list.
+
+# -*- coding:utf-8 -*-
+
+def find_outlier(data):
+        outlier = []
+
+        data.sort()
+        count = len(data)
+        i1 = 0.25 * count
+        i3 = 0.75 * count
+        
+        if i1 != int(i1):
+            Q1 = data[int(i1)]
+        else:
+            Q1 = (data[int(i1)-1] + data[int(i1)]) / 2
+
+        if i3 != int(i3):
+            Q3 = data[int(i3)]
+        else:
+            Q3 = (data[int(i3)-1] + data[int(i3)]) / 2
+
+        IQR = Q3 - Q1
+
+        for num in data:
+            if num < (Q1 - 1.5 * IQR) or num > (Q3 + 1.5 * IQR):
+                outlier.append(num)
+
+        return outlier
+
